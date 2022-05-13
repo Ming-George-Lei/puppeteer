@@ -225,7 +225,11 @@ export class LifecycleWatcher {
 
   _checkLifecycleComplete(): void {
     // We expect navigation to commit.
-    if (!checkLifecycle(this._frame, this._expectedLifecycle)) return;
+    if (
+      !this._hasSameDocumentNavigation &&
+      !checkLifecycle(this._frame, this._expectedLifecycle)
+    )
+      return;
     this._lifecycleCallback();
     if (
       this._frame._loaderId === this._initialLoaderId &&
